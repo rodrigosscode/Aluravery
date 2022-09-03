@@ -32,34 +32,6 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun Challenge() = Row(
-    modifier = Modifier
-        .height(80.dp)
-        .width(200.dp)
-) {
-    Box(
-        modifier = Modifier
-            .background(color = Color.Blue)
-            .fillMaxHeight()
-            .fillMaxWidth(0.3f)
-    )
-    Column {
-        Text(
-            text = "Test 1", modifier = Modifier
-                .fillMaxWidth()
-                .background(color = Color.LightGray)
-                .padding(10.dp),
-            fontSize = 6.sp
-        )
-        Text(text = "Test 2", modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-            fontSize = 6.sp)
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
 fun ProductItem() = Column {
     Box(
         modifier = Modifier
