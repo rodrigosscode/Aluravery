@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
@@ -39,13 +41,42 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true)
+@Composable
+fun ProductSection() = Column {
+    Text(
+        text = "Promoções",
+        fontSize = 20.sp,
+        modifier = Modifier
+            .padding(
+                start = 16.dp,
+                top = 16.dp,
+                end = 16.dp
+            ),
+        fontWeight = FontWeight(400)
+    )
+    Row(
+        modifier = Modifier
+            .padding(
+                top = 8.dp,
+                bottom = 16.dp
+            )
+            .fillMaxWidth()
+            .horizontalScroll(rememberScrollState()),
+        horizontalArrangement = Arrangement.spacedBy(16.dp)
+    ) {
+        Spacer(Modifier)
+        ProductItem()
+        ProductItem()
+        ProductItem()
+        Spacer(Modifier)
+    }
+}
+
 @Composable
 fun ProductItem() {
     Surface(
         shape = RoundedCornerShape(15.dp),
         elevation = 4.dp,
-        modifier = Modifier.padding(6.dp)
     ) {
         Column(
             Modifier
@@ -93,4 +124,16 @@ fun ProductItem() {
             }
         }
     }
+}
+
+@Preview(showBackground = true, widthDp = 500)
+@Composable
+private fun ProductSectionPreview() {
+    ProductSection()
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductItemPreview() {
+    ProductItem()
 }
