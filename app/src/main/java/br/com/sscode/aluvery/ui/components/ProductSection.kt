@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.sscode.aluvery.R
 import br.com.sscode.aluvery.model.Product
+import br.com.sscode.aluvery.sampledata.sampleProducts
 import java.math.BigDecimal
 
 @Composable
@@ -51,21 +52,3 @@ fun ProductSection(
 private fun ProductSectionPreview() {
     ProductSection(title = "Promoções", products = sampleProducts)
 }
-
-val sampleProducts = listOf(
-    Product(
-        name = "Hamburguer",
-        price = BigDecimal("12.99"),
-        imageRes = R.drawable.burger
-    ),
-    Product(
-        name = "Batata Frita",
-        price = BigDecimal("7.99"),
-        imageRes = R.drawable.fries
-    ),
-    Product(
-        name = "Pizza",
-        price = BigDecimal("19.99"),
-        imageRes = R.drawable.pizza
-    )
-)

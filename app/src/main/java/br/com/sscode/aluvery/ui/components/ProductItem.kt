@@ -52,7 +52,7 @@ fun ProductItem(product: Product) = with(product) {
                     .fillMaxWidth()
             ) {
                 Image(
-                    painter = painterResource(id = imageRes),
+                    painter = painterResource(id = R.drawable.placeholder),
                     contentDescription = "Imagem do produto",
                     modifier = Modifier
                         .size(imageSize)
@@ -89,7 +89,6 @@ private fun ProductItemPreview() {
         Product(
             name = LoremIpsum(50).values.first(),
             price = BigDecimal("14.99"),
-            imageRes = R.drawable.placeholder
         )
     )
 }
