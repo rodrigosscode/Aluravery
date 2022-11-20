@@ -2,4 +2,9 @@ package br.com.sscode.aluvery.model
 
 import java.math.BigDecimal
 
-data class Product(val name: String, val price: BigDecimal, val image: String? = null)
+data class Product(
+    val name: String,
+    val price: BigDecimal,
+    val image: String? = null,
+    val description: String? = null
+)

@@ -1,6 +1,5 @@
 package br.com.sscode.aluvery.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -25,22 +24,23 @@ import br.com.sscode.aluvery.extensions.toBrazilianCurrency
 import br.com.sscode.aluvery.model.Product
 import br.com.sscode.aluvery.ui.theme.Purple500
 import br.com.sscode.aluvery.ui.theme.Teal200
+import coil.compose.AsyncImage
 import java.math.BigDecimal
 
 @Composable
-fun ProductItem(product: Product) = with(product) {
+fun ProductItem(product: Product, modifier: Modifier = Modifier) = with(product) {
     Surface(
         shape = RoundedCornerShape(15.dp),
         elevation = 4.dp,
     ) {
         Column(
-            Modifier
+            modifier
                 .heightIn(250.dp, 300.dp)
                 .width(200.dp)
         ) {
             val imageSize = 100.dp
             Box(
-                modifier = Modifier
+                modifier = modifier
                     .height(imageSize)
                     .background(
                         brush = Brush.horizontalGradient(
@@ -51,19 +51,20 @@ fun ProductItem(product: Product) = with(product) {
                     )
                     .fillMaxWidth()
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.placeholder),
+                AsyncImage(
+                    model = image,
                     contentDescription = "Imagem do produto",
-                    modifier = Modifier
+                    modifier = modifier
                         .size(imageSize)
                         .offset(y = imageSize / 2)
                         .clip(shape = CircleShape)
                         .align(Alignment.Center),
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.placeholder)
                 )
             }
-            Spacer(modifier = Modifier.height(imageSize / 2))
-            Column(Modifier.padding(16.dp)) {
+            Spacer(modifier = modifier.height(imageSize / 2))
+            Column(modifier.padding(16.dp)) {
                 Text(
                     text = name,
                     fontSize = 18.sp,
@@ -73,7 +74,7 @@ fun ProductItem(product: Product) = with(product) {
                 )
                 Text(
                     text = price.toBrazilianCurrency(),
-                    modifier = Modifier.padding(top = 8.dp),
+                    modifier = modifier.padding(top = 8.dp),
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400)
                 )
