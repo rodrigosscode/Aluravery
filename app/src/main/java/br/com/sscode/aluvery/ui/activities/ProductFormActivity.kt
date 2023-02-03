@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.com.sscode.aluvery.R
+import br.com.sscode.aluvery.dao.ProductDao
 import br.com.sscode.aluvery.model.Product
 import br.com.sscode.aluvery.ui.theme.AluveryTheme
 import coil.compose.AsyncImage
@@ -33,12 +34,17 @@ import java.text.DecimalFormat
 
 class ProductFormActivity : ComponentActivity() {
 
+    private val productDao = ProductDao()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AluveryTheme {
                 Surface {
-                    ProductFormScreen()
+                    ProductFormScreen(onSaveClick = { product ->
+                        productDao.save(product)
+                        finish()
+                    })
                 }
             }
         }
@@ -46,7 +52,7 @@ class ProductFormActivity : ComponentActivity() {
 }
 
 @Composable
-fun ProductFormScreen() {
+fun ProductFormScreen(onSaveClick: (Product) -> Unit = {}) {
     Column(
         Modifier
             .fillMaxSize()
@@ -168,6 +174,7 @@ fun ProductFormScreen() {
                 description = description
             )
             Log.i("ProductFormScreen", "ProductFormScreen: $product")
+            onSaveClick(product)
         }, Modifier.fillMaxWidth()) {
             Text(text = "Salvar")
         }
