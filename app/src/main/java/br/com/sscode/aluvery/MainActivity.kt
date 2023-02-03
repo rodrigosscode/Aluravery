@@ -12,14 +12,14 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import br.com.sscode.aluvery.dao.ProductDao
+import br.com.sscode.aluvery.model.Product
 import br.com.sscode.aluvery.sampledata.sampleCandies
 import br.com.sscode.aluvery.sampledata.sampleDrinks
-import br.com.sscode.aluvery.sampledata.sampleSections
+import br.com.sscode.aluvery.sampledata.sampleProducts
 import br.com.sscode.aluvery.ui.activities.ProductFormActivity
 import br.com.sscode.aluvery.ui.screens.HomeScreen
 import br.com.sscode.aluvery.ui.screens.HomeScreenUiState
@@ -35,14 +35,8 @@ class MainActivity : ComponentActivity() {
             App(onFabClick = {
                 startActivity(Intent(this, ProductFormActivity::class.java))
             }, content = {
-                val sections = mapOf(
-                    "Todos produtos" to productDao.getAll(),
-                    "Promoções" to sampleDrinks + sampleCandies,
-                    "Doces" to sampleCandies,
-                    "Bebidas" to sampleDrinks
-                )
-                val state = remember { HomeScreenUiState() }
-                HomeScreen(sections = sections, state = state)
+                val products = productDao.getAll()
+                HomeScreen(products = products)
             })
         }
     }
@@ -56,7 +50,7 @@ private fun App(
     Surface {
         Scaffold(
             floatingActionButton = {
-                FloatingActionButton(onClick =  onFabClick) {
+                FloatingActionButton(onClick = onFabClick) {
                     Icon(imageVector = Icons.Default.Add, contentDescription = null)
                 }
             }
@@ -72,6 +66,6 @@ private fun App(
 @Composable
 fun AppPreview() {
     App {
-       HomeScreen(sections = sampleSections)
+        HomeScreen(products = sampleProducts)
     }
 }
