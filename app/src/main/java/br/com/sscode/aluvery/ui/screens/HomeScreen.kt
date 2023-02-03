@@ -16,36 +16,42 @@ import br.com.sscode.aluvery.ui.components.ProductSection
 import br.com.sscode.aluvery.ui.components.SearchTextField
 import br.com.sscode.aluvery.ui.theme.AluveryTheme
 
+class HomeScreenUiState(searchText: String = "") {
+    var text by mutableStateOf(searchText)
+        private set
+
+    val searchedProducts
+        get() = if (text.isNotBlank()) {
+            sampleProducts.filter { product ->
+                product.name.contains(
+                    text,
+                    ignoreCase = true,
+                ) || product.description?.contains(
+                    text,
+                    ignoreCase = true,
+                ) ?: false
+            }
+        } else emptyList()
+
+    fun isShowSections(): Boolean = text.isBlank()
+
+    val onSearchChange: (String) -> Unit = {
+        text = it
+    }
+}
+
 @Composable
 fun HomeScreen(
     sections: Map<String, List<Product>>,
-    searchText: String = ""
+    state: HomeScreenUiState = HomeScreenUiState()
 ) {
     Column {
 
-        var text by remember { mutableStateOf(searchText) }
-
         SearchTextField(
-            searchText = text,
-            onTextChanged = { newValue ->
-                text = newValue
-            }
+            searchText = state.text,
+            onTextChanged = state.onSearchChange
         )
 
-        val searchedProducts = remember(text) {
-            if(text.isNotBlank()) {
-                sampleProducts.filter { product ->
-                    product.name.contains(
-                        text,
-                        ignoreCase = true,
-                    ) ||
-                            product.description?.contains(
-                                text,
-                                ignoreCase = true,
-                            ) ?: false
-                }
-            } else emptyList()
-        }
         LazyColumn(
             Modifier
                 .fillMaxSize(),
@@ -56,7 +62,7 @@ fun HomeScreen(
                 end = 16.dp
             )
         ) {
-            if(text.isBlank()) {
+            if (state.isShowSections()) {
                 for (section in sections) {
                     val title = section.key
                     val products = section.value
@@ -68,7 +74,7 @@ fun HomeScreen(
                     }
                 }
             } else {
-                items(searchedProducts) { p ->
+                items(state.searchedProducts) { p ->
                     CardProductItem(
                         product = p,
                     )
